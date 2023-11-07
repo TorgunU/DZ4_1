@@ -5,7 +5,6 @@ public class GlobalInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        BindInput();
         BindLoader();
         BindResources();
     }

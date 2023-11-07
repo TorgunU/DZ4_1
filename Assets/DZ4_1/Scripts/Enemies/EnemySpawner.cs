@@ -1,42 +1,55 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using Zenject;
 
-public class EnemySpawner : MonoBehaviour, IPause
+public class EnemySpawner : IPause
 {
-    [SerializeField] private float _spawnCooldown;
+    private float _spawnCooldown;
 
-    [SerializeField] private List<Transform> _spawnPoints;
+    private List<Transform> _spawnPoints;
 
     private EnemyFactory _enemyFactory;
 
-    private Coroutine _spawn;
+    private ICoroutinePerformer _corutinePerformer;
+    private Coroutine _spawning;
 
     private bool _isPaused;
 
-    [Inject]
-    private void Construct(EnemyFactory enemyFactory, PauseHandler pauseHandler)
+    private EnemySpawner(EnemyFactory enemyFactory, PauseHandler pauseHandler, EnemySpawnPoints spawnPoints, 
+        ICoroutinePerformer corutinePerformer, EnemySpawnerConfig config)
     {
         _enemyFactory = enemyFactory;
         pauseHandler.Add(this);
+        _spawnPoints = spawnPoints.Points;
+        _corutinePerformer = corutinePerformer;
+
+        InitConfig(config);
+        
+        StartWork();
+    }
+
+    private void InitConfig(EnemySpawnerConfig config)
+    {
+        _spawnCooldown = config.SpawnCooldown;
     }
 
     public void StartWork()
     {
         StopWork();
 
-        _spawn = StartCoroutine(Spawn());
+        _spawning = _corutinePerformer.PerformCoroutine(Spawning());
     }
 
     public void StopWork()
     {
-        if (_spawn != null)
-            StopCoroutine(_spawn);
+        if (_spawning != null)
+            _corutinePerformer.CancelCoroutine(_spawning);
     }
 
-    private IEnumerator Spawn()
+    private IEnumerator Spawning()
     {
         float time = 0;
 

@@ -18,8 +18,9 @@ public class EnemySpawner : IPause
 
     private bool _isPaused;
 
-    private EnemySpawner(EnemyFactory enemyFactory, PauseHandler pauseHandler, EnemySpawnPoints spawnPoints, 
-        ICoroutinePerformer corutinePerformer, EnemySpawnerConfig config)
+    private EnemySpawner(EnemyFactory enemyFactory, PauseHandler pauseHandler, 
+        EnemySpawnPoints spawnPoints, ICoroutinePerformer corutinePerformer, 
+        EnemySpawnerConfig config)
     {
         _enemyFactory = enemyFactory;
         pauseHandler.Add(this);

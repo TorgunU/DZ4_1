@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class CorutinePerformer : MonoBehaviour, ICoroutinePerformer
+public class CoroutinePerformer : MonoBehaviour, ICoroutinePerformer
 {
     public Coroutine PerformCoroutine(IEnumerator enumerator)
     {

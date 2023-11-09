@@ -4,14 +4,12 @@ using Zenject;
 
 public class EnemySpawnerInstaller : MonoInstaller
 {
-    [SerializeField] private CorutinePerformer _corutinePerformer;
     [SerializeField] private EnemySpawnPoints _spawnPoints;
     [SerializeField] private EnemySpawnerConfig _config;
 
     public override void InstallBindings()
     {
         InstallFactory();
-        InstallCoroutinePerfomer();
         InstallSpawnerConfig();
         InstallSpawnPoints();
         InstallSpawner();
@@ -20,11 +18,6 @@ public class EnemySpawnerInstaller : MonoInstaller
     public void InstallFactory()
     {
         Container.Bind<EnemyFactory>().AsSingle();
-    }
-
-    public void InstallCoroutinePerfomer()
-    {
-        Container.Bind<ICoroutinePerformer>().FromInstance(_corutinePerformer).AsSingle();
     }
 
     public void InstallSpawnerConfig()

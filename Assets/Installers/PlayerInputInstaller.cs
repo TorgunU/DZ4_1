@@ -12,9 +12,10 @@ public class PlayerInputInstaller : MonoInstaller
 
     private void BindPlayerInput()
     {
-        Container.BindInstance(new InputActions());
+        Container.BindInstance(new InputActions()).NonLazy();
         Dekstop dekstop = Container.InstantiatePrefabForComponent<Dekstop>(_dekstop, 
             FindObjectOfType<Player>().transform);
-        Container.BindInterfacesAndSelfTo<PlayerInput>().FromInstance(dekstop).AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerInput>().FromInstance(dekstop).AsSingle()
+            .NonLazy();
     }
 }

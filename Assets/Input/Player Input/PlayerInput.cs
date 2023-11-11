@@ -21,7 +21,7 @@ public abstract class PlayerInput : MonoBehaviour, IPauseEvents
     {
         Actions.Dekstop.Pause.performed += pauseContext =>
         RaisePausePressed(pauseContext);
-        Actions.Dekstop.Pause.performed += pauseContext =>
+        Actions.Dekstop.Unpause.performed += pauseContext =>
         RaisePauseUnpressed(pauseContext);
     }
 
